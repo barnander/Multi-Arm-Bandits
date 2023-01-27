@@ -1,2 +1,3 @@
-function random = test_func(x)
+function [random, three] = test_func(x)
     random = randi(x);
+    three = 3;

@@ -3,26 +3,28 @@ classdef eGreedy
     %   Detailed explanation goes here
     
     properties
-        n_arms {mustBeInteger, mustBePositive} %number of advert campains
+        n_campaigns {mustBeInteger, mustBePositive} %number of advert campaigns
         epsilon {mustBeInRange(epsilon, 0,1)} 
         scores %probability of a click on ad
         choices %how many times each ad is chosen (1xn array)
     end
     
     methods
-        function obj = eGreedy(n_arms, epsilon)
+        function obj = eGreedy(n_campaigns, epsilon)
             %EGREEDY Construct an instance of this class
-            obj.n_arms = n_arms; 
+            obj.n_campaigns = n_campaigns; 
             obj.epsilon = epsilon; 
-            obj.scores = ones(1,n_arms);
-            obj.choices = zeros(1,n_arms);
+            %scores are the expected rewards. Initially set to all 1's
+            %meaning expect all advert buttons to get clicked 100% of times
+            obj.scores = ones(1,n_campaigns); 
+            obj.choices = zeros(1,n_campaigns);
             
         end
         
         function choice = choose(obj)
             %Choice of ad for iteration
             if rand <= obj.epsilon
-                choice = randi(obj.n_arms);
+                choice = randi(obj.n_campaigns);
             else 
                 [~,choice] = max(obj.scores(end,:));
             end

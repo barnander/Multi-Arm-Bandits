@@ -1,4 +1,4 @@
-classdef main
+classdef main <handle
     %main class is used to run the loop over n trials
     %will use eGreedy and also ad_Bandit classes
 
@@ -16,8 +16,8 @@ classdef main
     methods
         function obj = main() %initialise object
             obj.ad_Campaigns = ad_Bandit([0.28,0.35,0.4]); %bandit should have probabilities passed into it - if not will still run (see inside this class)
-            obj.myGreedy = eGreedy(obj.ad_Campaigns.N, 0.1); %inputs to eGreedy are number of ad campaigns and value of epsilon 
-            obj.n_trials = 20;  
+            obj.myGreedy = eGreedy(obj.ad_Campaigns.N, 0.2); %inputs to eGreedy are number of ad campaigns and value of epsilon 
+            obj.n_trials = 1000;  
         end
     
 

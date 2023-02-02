@@ -17,9 +17,9 @@ classdef ad_Bandit
             end
         end
         
-        function reward =  test(self,arm)   % calculate the reward
+        function reward =  test(self,ad_choice)   % calculate the reward
             %rand used below to randomly pick a number between 0 and 1
-            reward = rand < self.probs(arm);% reward is 1 or 0
+            reward = rand < self.probs(ad_choice);% reward is 1 or 0
         end
     end
     

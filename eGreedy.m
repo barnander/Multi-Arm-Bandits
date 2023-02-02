@@ -17,7 +17,7 @@ classdef eGreedy
             %scores are the expected rewards. Initially set to all 1's
             %meaning expect all advert buttons to get clicked 100% of times
             obj.scores = ones(1,n_campaigns); 
-            obj.choices = zeros(1,n_campaigns);
+            obj.choices = ones(1,n_campaigns);
             
         end
         
@@ -39,7 +39,7 @@ classdef eGreedy
             no_choices = obj.choices(choice); %number of times the ad has already been chosen
             score = obj.scores;
             current_p = obj.scores(end, choice); %current click probability of ad
-            new_p = (current_p * no_choices + click) / (no_choices+1); %compute new probability 
+            new_p = ( (current_p * no_choices) + click ) / (no_choices+1); %compute new probability 
             
             obj.scores(end+1, : ) = obj.scores(end, : ); %copy last line of scores into new line
             obj.scores(end, choice) = new_p; %add new probability to ad's column

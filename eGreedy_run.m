@@ -30,10 +30,11 @@ classdef eGreedy_run <handle
             for i = 1: obj.n_trials-1
                 ad_choice = obj.myGreedy.choose();
                 click = obj.ad_Campaigns.test(ad_choice);
-                success = success + click;
 
                 obj.myGreedy = obj.myGreedy.update(ad_choice, click);
-                obj.regret(end+1) = success - i*max(obj.ad_Campaigns.probs);
+                
+                regret_i = sum(obj.myGreedy.choices .* obj.ad_Campaigns.probs) - i* max(obj.ad_Campaigns.probs);
+                obj.regret(end+1) = regret_i;
                 
                 scores = obj.myGreedy.scores;
                 scores_table = array2table(scores);

@@ -1,5 +1,6 @@
 % run eGreedy model + plots
 e_Greedy = eGreedy_run;
+e_Greedy.n_trials = 2000;
 e_Greedy.run
 
 
@@ -22,21 +23,23 @@ ylabel("Regret")
 title("Regret over 1000 trials")
 
 %% plots regret for different epsilon values for eGreedy
-epsilons = 0:0.05: 0.25;
-x = 1:10;
+epsilons = 0:0.1: 0.5;
+x = 1:100;
 
 figure
 hold on
 for epsilon = epsilons
+    regrets = [];
     for i = x
         e_Greedy = eGreedy_run;
+        e_Greedy.n_trials = 100;
         e_Greedy.myGreedy.epsilon = epsilon;
         e_Greedy.run
         regrets(i,:) = e_Greedy.regret;
     end
-    
-    plot(mean(regrets))
     epsilon
+    plot(mean(regrets))
+    
 end
 xlabel("#Ads Shown")
 ylabel("Regret")
@@ -45,19 +48,39 @@ hold off
 %% average regret over 10 experiments of 1000 trials and plot egreedy
 regrets_greedy = [];
 regrets_decreasing = [];
-x = 1:100;
+x = 1:50;
 for i = x
     e_Greedy = eGreedy_run;
     e_Greedy.run
-    regrets_greedy(i,:) = e_Greedy.regret;
+    regrets_greedy(end+1) = e_Greedy.regret(end);
 
     e_Decrease = eDecrease_run;
     e_Decrease.run
-    regrets_decreasing(i,:) = e_Decrease.regret;
+    regrets_decreasing(end+1) = e_Decrease.regret(end);
+    i
 end
 
-plot_areaerrorbar(regrets_greedy)
-
+scatter([1 2], [mean(regrets_greedy), mean(regrets_decreasing)])
 %% plot edecreasing
 
 plot_areaerrorbar(regrets_decreasing)
+
+%%
+% epsilons = [0.05,0.1,0.15];
+% regret = [];
+% x = 1:10;
+% 
+% for e = epsilons
+%     for i = x
+%         regret_i = [];
+%         e_Greedy = eGreedy_run;
+%         e_Greedy.myGreedy.epsilon = e;
+%         e_Greedy.run;
+%         regret_i(end+1) = e_Greedy.regret(end);
+%         i
+%     end
+%     regret(end+1) = mean(regret_i);
+%     e
+% end
+% 
+% plot(epsilons,mean(regret))
